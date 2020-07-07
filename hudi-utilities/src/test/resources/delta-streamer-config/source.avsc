@@ -79,10 +79,6 @@
           {
             "name" : "amount",
             "type" : "double"
-          },
-          {
-            "name" : "currency",
-            "type" : "string"
           }
         ]
       }

@@ -85,7 +85,7 @@ public class HoodieTestDataGenerator {
   public static final String FARE_NESTED_SCHEMA = "{\"name\": \"fare\",\"type\": {\"type\":\"record\", \"name\":\"fare\",\"fields\": ["
       + "{\"name\": \"amount\",\"type\": \"double\"},{\"name\": \"currency\", \"type\": \"string\"}]}},";
   public static final String TIP_NESTED_SCHEMA = "{\"name\": \"tip_history\", \"type\": {\"type\": \"array\", \"items\": {\"type\": \"record\", \"name\": \"tip_history\", \"fields\": ["
-      + "{\"name\": \"amount\", \"type\": \"double\"}, {\"name\": \"currency\", \"type\": \"string\"}]}}},";
+      + "{\"name\": \"amount\", \"type\": \"double\"}]}}},";
   public static final String MAP_TYPE_SCHEMA = "{\"name\": \"city_to_state\", \"type\": {\"type\": \"map\", \"values\": \"string\"}},";
 
   public static final String TRIP_EXAMPLE_SCHEMA =
@@ -93,7 +93,7 @@ public class HoodieTestDataGenerator {
 
   public static final String NULL_SCHEMA = Schema.create(Schema.Type.NULL).toString();
   public static final String TRIP_HIVE_COLUMN_TYPES = "double,string,string,string,double,double,double,double,"
-      + "map<string,string>,struct<amount:double,currency:string>,array<struct<amount:double,currency:string>>,boolean";
+      + "map<string,string>,struct<amount:double,currency:string>,array<struct<amount:double>>,boolean";
 
   public static final Schema AVRO_SCHEMA = new Schema.Parser().parse(TRIP_EXAMPLE_SCHEMA);
   public static final Schema AVRO_SCHEMA_WITH_METADATA_FIELDS =
@@ -177,7 +177,6 @@ public class HoodieTestDataGenerator {
     Schema tipSchema = new Schema.Parser().parse(AVRO_SCHEMA.getField("tip_history").schema().toString()).getElementType();
     GenericRecord tipRecord = new GenericData.Record(tipSchema);
     tipRecord.put("amount", RAND.nextDouble() * 100);
-    tipRecord.put("currency", "USD");
     tipHistoryArray.add(tipRecord);
     rec.put("tip_history", tipHistoryArray);
 
